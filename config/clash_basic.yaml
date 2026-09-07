@@ -3,7 +3,7 @@
 #socks-port: 7891       # SOCKS5 代理端口
 mixed-port: 7897       # HTTP + SOCKS5 混合端口（推荐用这个）
 allow-lan: false
-ipv6: false
+#ipv6: false            # 是否允许内核接受 IPv6 流量
 #bind-address: '*'      # 允许局域网为 true 时启用
 mode: rule             # 运行模式：rule / global / direct
 log-level: info
@@ -84,7 +84,7 @@ dns:
 # 配置文件管理
 profile:
   store-selected: true
-  store-fake-ip: false
+  store-fake-ip: true
 
 # 域名 / 流量嗅探
 sniffer:
