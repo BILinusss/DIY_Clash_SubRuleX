@@ -1,59 +1,92 @@
 # https://clashparty.org/docs/guide/override/yaml
-proxy-groups:
-  - name: "🚀 节点选择"
-    type: select
-    proxies: ["♻️ 自动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇺🇸 美国节点", "🇸🇬 新加坡节点", "🇰🇷 韩国节点", "🇬🇧 英国节点", "🇩🇪 德国节点", "🇫🇷 法国节点", "🇨🇦 加拿大节点", "🇦🇺 澳大利亚节点", "🌐 其他节点", DIRECT]
-  - name: "♻️ 自动选择"
+x-anchors:
+  default-proxies: &default-proxies
+    - "🚀 节点选择"
+    - "♻️ 自动选择"
+    - "🇭🇰 香港节点"
+    - "🇹🇼 台湾节点"
+    - "🇯🇵 日本节点"
+    - "🇺🇸 美国节点"
+    - "🇸🇬 新加坡节点"
+    - "🇰🇷 韩国节点"
+    - "🇬🇧 英国节点"
+    - "🇩🇪 德国节点"
+    - "🇫🇷 法国节点"
+    - "🇨🇦 加拿大节点"
+    - "🇦🇺 澳大利亚节点"
+    - "🌐 其他节点"
+    - DIRECT
+
+  url-test-group: &url-test-group
     type: url-test
     include-all: true
     url: "http://www.gstatic.com/generate_204"
     interval: 300
     tolerance: 50
+
+  rule-provider-domain: &rule-provider-domain
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+
+  rule-provider-ip: &rule-provider-ip
+    type: http
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+
+proxy-groups:
+  - name: "🚀 节点选择"
+    type: select
+    proxies: ["♻️ 自动选择", "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇯🇵 日本节点", "🇺🇸 美国节点", "🇸🇬 新加坡节点", "🇰🇷 韩国节点", "🇬🇧 英国节点", "🇩🇪 德国节点", "🇫🇷 法国节点", "🇨🇦 加拿大节点", "🇦🇺 澳大利亚节点", "🌐 其他节点", DIRECT]
+  - name: "♻️ 自动选择"
+    <<: *url-test-group
   - name: "🛑 广告拦截"
     type: select
     proxies: [REJECT, DIRECT]
   - name: "🤖 AI 服务"
     type: select
-    proxies: ["🚀 节点选择", "♻️ 自动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇺🇸 美国节点", "🇸🇬 新加坡节点", "🇰🇷 韩国节点", "🇬🇧 英国节点", "🇩🇪 德国节点", "🇫🇷 法国节点", "🇨🇦 加拿大节点", "🇦🇺 澳大利亚节点", "🌐 其他节点", DIRECT]
+    proxies: *default-proxies
   - name: "✨ Gemini"
     type: select
-    proxies: ["🚀 节点选择", "♻️ 自动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇺🇸 美国节点", "🇸🇬 新加坡节点", "🇰🇷 韩国节点", "🇬🇧 英国节点", "🇩🇪 德国节点", "🇫🇷 法国节点", "🇨🇦 加拿大节点", "🇦🇺 澳大利亚节点", "🌐 其他节点", DIRECT]
+    proxies: *default-proxies
   - name: "📹 油管视频"
     type: select
-    proxies: ["🚀 节点选择", "♻️ 自动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇺🇸 美国节点", "🇸🇬 新加坡节点", "🇰🇷 韩国节点", "🇬🇧 英国节点", "🇩🇪 德国节点", "🇫🇷 法国节点", "🇨🇦 加拿大节点", "🇦🇺 澳大利亚节点", "🌐 其他节点", DIRECT]
+    proxies: *default-proxies
   - name: "🔍 谷歌服务"
     type: select
-    proxies: ["🚀 节点选择", "♻️ 自动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇺🇸 美国节点", "🇸🇬 新加坡节点", "🇰🇷 韩国节点", "🇬🇧 英国节点", "🇩🇪 德国节点", "🇫🇷 法国节点", "🇨🇦 加拿大节点", "🇦🇺 澳大利亚节点", "🌐 其他节点", DIRECT]
+    proxies: *default-proxies
   - name: "Ⓜ️ 微软服务"
     type: select
-    proxies: ["🚀 节点选择", "♻️ 自动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇺🇸 美国节点", "🇸🇬 新加坡节点", "🇰🇷 韩国节点", "🇬🇧 英国节点", "🇩🇪 德国节点", "🇫🇷 法国节点", "🇨🇦 加拿大节点", "🇦🇺 澳大利亚节点", "🌐 其他节点", DIRECT]
+    proxies: *default-proxies
   - name: "🍏 苹果服务"
     type: select
-    proxies: ["🚀 节点选择", "♻️ 自动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇺🇸 美国节点", "🇸🇬 新加坡节点", "🇰🇷 韩国节点", "🇬🇧 英国节点", "🇩🇪 德国节点", "🇫🇷 法国节点", "🇨🇦 加拿大节点", "🇦🇺 澳大利亚节点", "🌐 其他节点", DIRECT]
+    proxies: *default-proxies
   - name: "📲 电报消息"
     type: select
-    proxies: ["🚀 节点选择", "♻️ 自动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇺🇸 美国节点", "🇸🇬 新加坡节点", "🇰🇷 韩国节点", "🇬🇧 英国节点", "🇩🇪 德国节点", "🇫🇷 法国节点", "🇨🇦 加拿大节点", "🇦🇺 澳大利亚节点", "🌐 其他节点", DIRECT]
+    proxies: *default-proxies
   - name: "🐦 推特/X"
     type: select
-    proxies: ["🚀 节点选择", "♻️ 自动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇺🇸 美国节点", "🇸🇬 新加坡节点", "🇰🇷 韩国节点", "🇬🇧 英国节点", "🇩🇪 德国节点", "🇫🇷 法国节点", "🇨🇦 加拿大节点", "🇦🇺 澳大利亚节点", "🌐 其他节点", DIRECT]
+    proxies: *default-proxies
   - name: "📘 Meta 系"
     type: select
-    proxies: ["🚀 节点选择", "♻️ 自动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇺🇸 美国节点", "🇸🇬 新加坡节点", "🇰🇷 韩国节点", "🇬🇧 英国节点", "🇩🇪 德国节点", "🇫🇷 法国节点", "🇨🇦 加拿大节点", "🇦🇺 澳大利亚节点", "🌐 其他节点", DIRECT]
+    proxies: *default-proxies
   - name: "🎬 奈飞"
     type: select
-    proxies: [ "🚀 节点选择", "♻️ 自动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇺🇸 美国节点", "🇸🇬 新加坡节点", "🇰🇷 韩国节点", "🇬🇧 英国节点", "🇩🇪 德国节点", "🇫🇷 法国节点", "🇨🇦 加拿大节点", "🇦🇺 澳大利亚节点", "🌐 其他节点", DIRECT ]
+    proxies: *default-proxies
   - name: "🎮 Steam"
     type: select
-    proxies: ["🚀 节点选择", "♻️ 自动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇺🇸 美国节点", "🇸🇬 新加坡节点", "🇰🇷 韩国节点", "🇬🇧 英国节点", "🇩🇪 德国节点", "🇫🇷 法国节点", "🇨🇦 加拿大节点", "🇦🇺 澳大利亚节点", "🌐 其他节点", DIRECT]
+    proxies: *default-proxies
   - name: "🐱 代码托管"
     type: select
-    proxies: ["🚀 节点选择", "♻️ 自动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇺🇸 美国节点", "🇸🇬 新加坡节点", "🇰🇷 韩国节点", "🇬🇧 英国节点", "🇩🇪 德国节点", "🇫🇷 法国节点", "🇨🇦 加拿大节点", "🇦🇺 澳大利亚节点", "🌐 其他节点", DIRECT]
+    proxies: *default-proxies
   - name: "☁️ 云服务"
     type: select
-    proxies: ["🚀 节点选择", "♻️ 自动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇺🇸 美国节点", "🇸🇬 新加坡节点", "🇰🇷 韩国节点", "🇬🇧 英国节点", "🇩🇪 德国节点", "🇫🇷 法国节点", "🇨🇦 加拿大节点", "🇦🇺 澳大利亚节点", "🌐 其他节点", DIRECT]
+    proxies: *default-proxies
   - name: "🛠️ 开发工具"
     type: select
-    proxies: ["🚀 节点选择", "♻️ 自动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇺🇸 美国节点", "🇸🇬 新加坡节点", "🇰🇷 韩国节点", "🇬🇧 英国节点", "🇩🇪 德国节点", "🇫🇷 法国节点", "🇨🇦 加拿大节点", "🇦🇺 澳大利亚节点", "🌐 其他节点", DIRECT]
+    proxies: *default-proxies
   - name: "🏠 私有网络"
     type: select
     proxies: [DIRECT, "🚀 节点选择"]
@@ -62,141 +95,93 @@ proxy-groups:
     proxies: [DIRECT, "🚀 节点选择"]
   - name: "🌍 非中国"
     type: select
-    proxies: ["🚀 节点选择", "♻️ 自动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇺🇸 美国节点", "🇸🇬 新加坡节点", "🇰🇷 韩国节点", "🇬🇧 英国节点", "🇩🇪 德国节点", "🇫🇷 法国节点", "🇨🇦 加拿大节点", "🇦🇺 澳大利亚节点", "🌐 其他节点", DIRECT]
+    proxies: *default-proxies
   - name: "🐟 漏网之鱼"
     type: select
-    proxies: ["🚀 节点选择", "♻️ 自动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇺🇸 美国节点", "🇸🇬 新加坡节点", "🇰🇷 韩国节点", "🇬🇧 英国节点", "🇩🇪 德国节点", "🇫🇷 法国节点", "🇨🇦 加拿大节点", "🇦🇺 澳大利亚节点", "🌐 其他节点", DIRECT]
+    proxies: *default-proxies
   - name: "🇭🇰 香港节点"
-    type: url-test
-    include-all: true
+    <<: *url-test-group
     filter: "(?i)香港|\bHong Kong\b|\bHK\b"
-    url: "http://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
-  - name: "🇨🇳 台湾节点"
-    type: url-test
-    include-all: true
+  - name: "🇹🇼 台湾节点"
+    <<: *url-test-group
     filter: "(?i)台湾|\bTaiwan\b|\bTW\b"
-    url: "http://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
   - name: "🇯🇵 日本节点"
-    type: url-test
-    include-all: true
+    <<: *url-test-group
     filter: "(?i)日本|\bJapan\b|\bJP\b"
-    url: "http://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
   - name: "🇺🇸 美国节点"
-    type: url-test
-    include-all: true
+    <<: *url-test-group
     filter: "(?i)美国|\bUnited States\b|\bUS\b"
-    url: "http://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
   - name: "🇸🇬 新加坡节点"
-    type: url-test
-    include-all: true
+    <<: *url-test-group
     filter: "(?i)新加坡|\bSingapore\b|\bSG\b"
-    url: "http://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
   - name: "🇰🇷 韩国节点"
-    type: url-test
-    include-all: true
+    <<: *url-test-group
     filter: "(?i)韩国|\bKorea\b|\bKR\b"
-    url: "http://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
   - name: "🇬🇧 英国节点"
-    type: url-test
-    include-all: true
+    <<: *url-test-group
     filter: "(?i)英国|\bUnited Kingdom\b|\bUK\b|\bGB\b"
-    url: "http://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
   - name: "🇩🇪 德国节点"
-    type: url-test
-    include-all: true
+    <<: *url-test-group
     filter: "(?i)德国|\bGermany\b|\bDE\b"
-    url: "http://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
   - name: "🇫🇷 法国节点"
-    type: url-test
-    include-all: true
+    <<: *url-test-group
     filter: "(?i)法国|\bFrance\b|\bFR\b"
-    url: "http://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
   - name: "🇨🇦 加拿大节点"
-    type: url-test
-    include-all: true
+    <<: *url-test-group
     filter: "(?i)加拿大|\bCanada\b|\bCA\b"
-    url: "http://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
   - name: "🇦🇺 澳大利亚节点"
-    type: url-test
-    include-all: true
+    <<: *url-test-group
     filter: "(?i)澳大利亚|\bAustralia\b|\bAU\b"
-    url: "http://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
   - name: "🌐 其他节点"
-    type: url-test
-    include-all: true
+    <<: *url-test-group
     filter: "(?i)^(?!.*(香港|Hong Kong|\bHK\b|台湾|Taiwan|\bTW\b|日本|Japan|\bJP\b|美国|United States|\bUS\b|新加坡|Singapore|\bSG\b|韩国|Korea|\bKR\b|英国|United Kingdom|\bUK\b|\bGB\b|德国|Germany|\bDE\b|法国|France|\bFR\b|加拿大|Canada|\bCA\b|澳大利亚|Australia|\bAU\b)).*"
-    url: "http://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
 
 rule-providers:
-  category-ads-all: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ads-all.mrs", path: ./ruleset/category-ads-all.mrs, interval: 86400, format: mrs}
-  private: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/private.mrs", path: ./ruleset/private.mrs, interval: 86400, format: mrs}
-  private-ip: {type: http, behavior: ipcidr, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/private.mrs", path: ./ruleset/private-ip.mrs, interval: 86400, format: mrs}
-  geolocation-cn: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/geolocation-cn.mrs", path: ./ruleset/geolocation-cn.mrs, interval: 86400, format: mrs}
-  cn-ip: {type: http, behavior: ipcidr, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/cn.mrs", path: ./ruleset/cn-ip.mrs, interval: 86400, format: mrs}
-  geolocation-!cn: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/geolocation-!cn.mrs", path: "./ruleset/geolocation-!cn.mrs", interval: 86400, format: mrs}
-  openai: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai.mrs", path: ./ruleset/openai.mrs, interval: 86400, format: mrs}
-  anthropic: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/anthropic.mrs", path: ./ruleset/anthropic.mrs, interval: 86400, format: mrs}
-  category-ai-chat-!cn: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ai-chat-!cn.mrs", path: "./ruleset/category-ai-chat-!cn.mrs", interval: 86400, format: mrs}
-  google-gemini: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/google-gemini.mrs", path: ./ruleset/google-gemini.mrs, interval: 86400, format: mrs}
-  youtube: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/youtube.mrs", path: ./ruleset/youtube.mrs, interval: 86400, format: mrs}
-  google: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/google.mrs", path: ./ruleset/google.mrs, interval: 86400, format: mrs}
-  google-ip: {type: http, behavior: ipcidr, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/google.mrs", path: ./ruleset/google-ip.mrs, interval: 86400, format: mrs}
-  microsoft: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/microsoft.mrs", path: ./ruleset/microsoft.mrs, interval: 86400, format: mrs}
-  onedrive: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/onedrive.mrs", path: ./ruleset/onedrive.mrs, interval: 86400, format: mrs}
-  apple: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/apple.mrs", path: ./ruleset/apple.mrs, interval: 86400, format: mrs}
-  icloud: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/icloud.mrs", path: ./ruleset/icloud.mrs, interval: 86400, format: mrs}
-  telegram: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/telegram.mrs", path: ./ruleset/telegram.mrs, interval: 86400, format: mrs}
-  telegram-ip: {type: http, behavior: ipcidr, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/telegram.mrs", path: ./ruleset/telegram-ip.mrs, interval: 86400, format: mrs}
-  twitter: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/twitter.mrs", path: ./ruleset/twitter.mrs, interval: 86400, format: mrs}
-  twitter-ip: {type: http, behavior: ipcidr, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/twitter.mrs", path: ./ruleset/twitter-ip.mrs, interval: 86400, format: mrs}
-  facebook: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/facebook.mrs", path: ./ruleset/facebook.mrs, interval: 86400, format: mrs}
-  instagram: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/instagram.mrs", path: ./ruleset/instagram.mrs, interval: 86400, format: mrs}
-  whatsapp: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/whatsapp.mrs", path: ./ruleset/whatsapp.mrs, interval: 86400, format: mrs}
-  facebook-ip: {type: http, behavior: ipcidr, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/facebook.mrs", path: ./ruleset/facebook-ip.mrs, interval: 86400, format: mrs}
-  netflix: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/netflix.mrs", path: ./ruleset/netflix.mrs, interval: 86400, format: mrs}
-  netflix-ip: {type: http, behavior: ipcidr, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/netflix.mrs", path: ./ruleset/netflix-ip.mrs, interval: 86400, format: mrs}
-  steam: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/steam.mrs", path: ./ruleset/steam.mrs, interval: 86400, format: mrs}
-  github: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/github.mrs", path: ./ruleset/github.mrs, interval: 86400, format: mrs}
-  gitlab: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/gitlab.mrs", path: ./ruleset/gitlab.mrs, interval: 86400, format: mrs}
-  atlassian: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/atlassian.mrs", path: ./ruleset/atlassian.mrs, interval: 86400, format: mrs}
-  aws: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/aws.mrs", path: ./ruleset/aws.mrs, interval: 86400, format: mrs}
-  azure: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/azure.mrs", path: ./ruleset/azure.mrs, interval: 86400, format: mrs}
-  cloudflare: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/cloudflare.mrs", path: ./ruleset/cloudflare.mrs, interval: 86400, format: mrs}
-  digitalocean: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/digitalocean.mrs", path: ./ruleset/digitalocean.mrs, interval: 86400, format: mrs}
-  vercel: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/vercel.mrs", path: ./ruleset/vercel.mrs, interval: 86400, format: mrs}
-  netlify: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/netlify.mrs", path: ./ruleset/netlify.mrs, interval: 86400, format: mrs}
-  heroku: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/heroku.mrs", path: ./ruleset/heroku.mrs, interval: 86400, format: mrs}
-  dropbox: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/dropbox.mrs", path: ./ruleset/dropbox.mrs, interval: 86400, format: mrs}
-  cloudflare-ip: {type: http, behavior: ipcidr, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/cloudflare.mrs", path: ./ruleset/cloudflare-ip.mrs, interval: 86400, format: mrs}
-  docker: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/docker.mrs", path: ./ruleset/docker.mrs, interval: 86400, format: mrs}
-  npmjs: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/npmjs.mrs", path: ./ruleset/npmjs.mrs, interval: 86400, format: mrs}
-  jetbrains: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/jetbrains.mrs", path: ./ruleset/jetbrains.mrs, interval: 86400, format: mrs}
-  stackexchange: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/stackexchange.mrs", path: ./ruleset/stackexchange.mrs, interval: 86400, format: mrs}
-  cn: {type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/cn.mrs", path: ./ruleset/cn.mrs, interval: 86400, format: mrs}
+  category-ads-all: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ads-all.mrs", path: ./ruleset/category-ads-all.mrs }
+  private: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/private.mrs", path: ./ruleset/private.mrs }
+  private-ip: { <<: *rule-provider-ip, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/private.mrs", path: ./ruleset/private-ip.mrs }
+  google-gemini: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/google-gemini.mrs", path: ./ruleset/google-gemini.mrs }
+  openai: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai.mrs", path: ./ruleset/openai.mrs }
+  anthropic: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/anthropic.mrs", path: ./ruleset/anthropic.mrs }
+  category-ai-chat-!cn: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ai-chat-!cn.mrs", path: "./ruleset/category-ai-chat-!cn.mrs" }
+  geolocation-cn: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/geolocation-cn.mrs", path: ./ruleset/geolocation-cn.mrs }
+  cn-ip: { <<: *rule-provider-ip, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/cn.mrs", path: ./ruleset/cn-ip.mrs }
+  youtube: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/youtube.mrs", path: ./ruleset/youtube.mrs }
+  aws: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/aws.mrs", path: ./ruleset/aws.mrs }
+  azure: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/azure.mrs", path: ./ruleset/azure.mrs }
+  cloudflare: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/cloudflare.mrs", path: ./ruleset/cloudflare.mrs }
+  digitalocean: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/digitalocean.mrs", path: ./ruleset/digitalocean.mrs }
+  vercel: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/vercel.mrs", path: ./ruleset/vercel.mrs }
+  netlify: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/netlify.mrs", path: ./ruleset/netlify.mrs }
+  heroku: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/heroku.mrs", path: ./ruleset/heroku.mrs }
+  dropbox: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/dropbox.mrs", path: ./ruleset/dropbox.mrs }
+  cloudflare-ip: { <<: *rule-provider-ip, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/cloudflare.mrs", path: ./ruleset/cloudflare-ip.mrs }
+  google: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/google.mrs", path: ./ruleset/google.mrs }
+  google-ip: { <<: *rule-provider-ip, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/google.mrs", path: ./ruleset/google-ip.mrs }
+  telegram: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/telegram.mrs", path: ./ruleset/telegram.mrs }
+  telegram-ip: { <<: *rule-provider-ip, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/telegram.mrs", path: ./ruleset/telegram-ip.mrs }
+  github: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/github.mrs", path: ./ruleset/github.mrs }
+  gitlab: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/gitlab.mrs", path: ./ruleset/gitlab.mrs }
+  atlassian: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/atlassian.mrs", path: ./ruleset/atlassian.mrs }
+  microsoft: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/microsoft.mrs", path: ./ruleset/microsoft.mrs }
+  onedrive: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/onedrive.mrs", path: ./ruleset/onedrive.mrs }
+  apple: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/apple.mrs", path: ./ruleset/apple.mrs }
+  icloud: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/icloud.mrs", path: ./ruleset/icloud.mrs }
+  twitter: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/twitter.mrs", path: ./ruleset/twitter.mrs }
+  twitter-ip: { <<: *rule-provider-ip, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/twitter.mrs", path: ./ruleset/twitter-ip.mrs }
+  facebook: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/facebook.mrs", path: ./ruleset/facebook.mrs }
+  instagram: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/instagram.mrs", path: ./ruleset/instagram.mrs }
+  whatsapp: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/whatsapp.mrs", path: ./ruleset/whatsapp.mrs }
+  facebook-ip: { <<: *rule-provider-ip, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/facebook.mrs", path: ./ruleset/facebook-ip.mrs }
+  netflix: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/netflix.mrs", path: ./ruleset/netflix.mrs }
+  netflix-ip: { <<: *rule-provider-ip, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/netflix.mrs", path: ./ruleset/netflix-ip.mrs }
+  steam: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/steam.mrs", path: ./ruleset/steam.mrs }
+  docker: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/docker.mrs", path: ./ruleset/docker.mrs }
+  npmjs: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/npmjs.mrs", path: ./ruleset/npmjs.mrs }
+  jetbrains: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/jetbrains.mrs", path: ./ruleset/jetbrains.mrs }
+  stackexchange: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/stackexchange.mrs", path: ./ruleset/stackexchange.mrs }
+  geolocation-!cn: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/geolocation-!cn.mrs", path: "./ruleset/geolocation-!cn.mrs" }
+  cn: { <<: *rule-provider-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/cn.mrs", path: ./ruleset/cn.mrs }
 
 rules:
   - RULE-SET,category-ads-all,🛑 广告拦截
