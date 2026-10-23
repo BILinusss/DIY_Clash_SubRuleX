@@ -2,75 +2,86 @@
 #port: 7890             # HTTP 代理端口
 #socks-port: 7891       # SOCKS5 代理端口
 mixed-port: 7897       # HTTP + SOCKS5 混合端口（推荐用这个）
-allow-lan: false
-#ipv6: false            # 是否允许内核接受 IPv6 流量
-#bind-address: '*'      # 允许局域网为 true 时启用
+#allow-lan: true
+#bind-address: "*"      # 允许局域网为 true 时启用
 mode: rule             # 运行模式：rule / global / direct
 log-level: info
+ipv6: false            # 是否允许内核接受 IPv6 流量
 unified-delay: true    # 统一延迟计算
 tcp-concurrent: true   # 并发连接多个 IP，优先使用最快连接
 find-process-mode: strict
-external-controller: '127.0.0.1:9090'   # 外部控制 API 地址
+external-controller: "127.0.0.1:9090"   # 外部控制 API 地址
+
+# TUN 虚拟网卡配置
+tun:
+  enable: true
+  stack: mixed        # system / gvisor / mixed（推荐 mixed）
+  dns-hijack:         # 劫持发往 53 端口的 DNS 请求，交由内核 DNS 模块处理
+    - "any:53"
+    - "tcp://any:53"
+  auto-route: true      # 自动设置系统路由，将流量导入 TUN
+  auto-redirect: false      # 是否自动重定向 TCP 链接（主要用于 Linux）
+  auto-detect-interface: true    # 自动检测出站网卡，避免路由环路
 
 # DNS 配置
 dns:
   enable: true
-  listen: '127.0.0.1:5335'
+  listen: "127.0.0.1:5335"
   ipv6: false   # 建议关闭，防止 IPv6 导致的分流不稳定
-  use-hosts: true
   use-system-hosts: false
   respect-rules: true
   default-nameserver:      # 用于解析 DNS 服务器自身域名
-    - 223.5.5.5
-    - 119.29.29.29
+    - "tls://223.5.5.5"
+    - "tls://119.29.29.29"
   enhanced-mode: fake-ip         # 关键配置：fake-ip 模式（推荐）
   fake-ip-range: 198.18.0.1/16  # 分配给域名的假 IP 段
   fake-ip-filter-mode: blacklist
   fake-ip-filter:   # 这些域名不用 fake-ip（本地网络、时间同步、系统网络检测等）
-    - '+.lan'
-    - '+.local'
-    - '+.localhost'
-    - 'time.*.com'
-    - 'ntp.*.com'
-    - '+.ntp.org'
-    - 'captive.apple.com'
-    - '+.msftconnecttest.com'
-    - '+.msftncsi.com'
+    - "+.lan"
+    - "+.local"
+    - "+.localhost"
+    - "time.*.com"
+    - "ntp.*.com"
+    - "+.ntp.org"
+    - "captive.apple.com"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "+.market.xiaomi.com"
 
   # 国内 / 海外域名 DNS 分流
   nameserver-policy:
-    'geosite:cn,private':
-      - 'https://dns.alidns.com/dns-query'
-      - 'https://doh.pub/dns-query'
-    'geosite:geolocation-!cn':
-      - 'https://cloudflare-dns.com/dns-query'
-      - 'https://dns.google/dns-query'
-      - 'https://dns.quad9.net/dns-query'
-    'geosite:category-ads-all': rcode://success
+    "geosite:cn,private":
+      - "https://dns.alidns.com/dns-query"
+      - "https://doh.pub/dns-query"
+    "geosite:geolocation-!cn":
+      - "https://cloudflare-dns.com/dns-query"
+      - "https://dns.google/dns-query"
+      - "https://dns.quad9.net/dns-query"
+    "geosite:category-ads-all": rcode://success
 
   # 默认 DNS
   nameserver:
-    - 'https://dns.alidns.com/dns-query'   # 阿里 DoH（国内）
-    - 'https://doh.pub/dns-query'   # 腾讯 DoH（国内）
-    - 'https://223.6.6.6/dns-query#h3=true'   # 阿里 DoH，强制 HTTP/3
-
-  # 备用 DNS
-  fallback:
-    - 'https://cloudflare-dns.com/dns-query'   # Cloudflare DoH（国外）
-    - 'https://dns.google/dns-query'   # Google DoH（国外）
-    - 'https://dns.quad9.net/dns-query'   # Quad9 DoH（国外）
-    - 'https://101.101.101.101/dns-query'
+    - "https://dns.alidns.com/dns-query"   # 阿里 DoH（国内）
+    - "https://doh.pub/dns-query"   # 腾讯 DoH（国内）
+    - "https://223.6.6.6/dns-query#h3=true"   # 阿里 DoH，强制 HTTP/3
 
   # 代理节点域名专用 DNS
   proxy-server-nameserver:
-    - 'https://dns.alidns.com/dns-query'
-    - 'https://doh.pub/dns-query'
+    - "https://dns.alidns.com/dns-query"
+    - "https://doh.pub/dns-query"
 
   # DIRECT 出口专用 DNS
   direct-nameserver:
-    - 'tls://223.5.5.5'
-    - 'tls://119.29.29.29'
-    - 'tls://114.114.114.114'
+    - "tls://223.5.5.5"
+    - "tls://119.29.29.29"
+    - "tls://114.114.114.114"
+
+  # 备用 DNS
+  fallback:
+    - "https://cloudflare-dns.com/dns-query"   # Cloudflare DoH（国外）
+    - "https://dns.google/dns-query"   # Google DoH（国外）
+    - "https://dns.quad9.net/dns-query"   # Quad9 DoH（国外）
+    - "https://101.101.101.101/dns-query"
 
   # 备用 DNS 过滤
   fallback-filter:
@@ -98,3 +109,13 @@ sniffer:
       ports: [443, 8443]
     QUIC:
       ports: [443, 8443]
+
+# Geo 地理数据配置
+geodata-mode: true
+geo-auto-update: true
+geo-update-interval: 24
+geox-url:        # 自定义 Geo 数据下载地址
+  geoip: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
+  geosite: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
+  mmdb: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
+  asn: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/GeoLite2-ASN.mmdb"
